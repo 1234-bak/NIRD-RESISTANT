@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import App from './App'; // Le Jeu
+import App from './App';
 import Home from './components/Pages/Home';
 import Login from './components/Pages/Login';
-import Register from './components/Pages/Register'; // <--- NOUVEAU
+import Register from './components/Pages/Register';
 import Dashboard from './components/Pages/Dashboard';
 import './index.css';
+import './Responsive.css'; // <--- C'est ici qu'on charge les styles mobile !
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -14,7 +15,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} /> {/* <--- NOUVELLE ROUTE */}
+        <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/game" element={<App />} />
       </Routes>
