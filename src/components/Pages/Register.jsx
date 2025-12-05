@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { UserPlus, ArrowLeft, AlertCircle, Lock, User } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { API_URL } from '../../config'; // <--- 1. IMPORT IMPORTANT
 
 const Register = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
@@ -10,11 +11,11 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    // Validation simple
     if (!formData.username.trim() || !formData.password.trim()) return;
 
     try {
-      const response = await fetch('http://localhost:8080/api/player/register', {
+      // <--- 2. CORRECTION ICI : Utilisation de backticks ` et ${API_URL}
+      const response = await fetch(`${API_URL}/api/player/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -22,11 +23,9 @@ const Register = () => {
 
       if (response.ok) {
         const data = await response.json();
-        // Connexion automatique après inscription réussie
         localStorage.setItem('user', JSON.stringify(data));
         navigate('/dashboard');
       } else if (response.status === 409) {
-        // Code 409 Conflict = Pseudo déjà pris
         setError("Ce pseudo est déjà pris par un autre résistant !");
       } else {
         setError("Une erreur est survenue lors de l'inscription.");
@@ -54,7 +53,6 @@ const Register = () => {
         </div>
 
         <form onSubmit={handleRegister} style={styles.form}>
-          {/* Champ Pseudo */}
           <div style={{textAlign: 'left'}}>
             <label style={styles.label}>Choisissez votre Pseudo</label>
             <div style={{position: 'relative'}}>
@@ -69,7 +67,6 @@ const Register = () => {
             </div>
           </div>
 
-          {/* Champ Mot de Passe */}
           <div style={{textAlign: 'left'}}>
             <label style={styles.label}>Mot de passe</label>
             <div style={{position: 'relative'}}>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Trophy, Play, Activity, History, User, Clock } from 'lucide-react';
 import Navbar from '../UI/Navbar';
+import { API_URL } from '../../config'; // <--- 1. IMPORT
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -19,7 +20,8 @@ const Dashboard = () => {
     setUser(JSON.parse(storedUser));
 
     // 2. Charger le classement
-    fetch('http://localhost:8080/api/player/leaderboard')
+    // <--- 2. CORRECTION ICI : Utilisation de backticks ` et ${API_URL}
+    fetch(`${API_URL}/api/player/leaderboard`)
       .then(res => res.json())
       .then(data => setLeaderboard(data))
       .catch(err => console.error("Erreur leaderboard", err));

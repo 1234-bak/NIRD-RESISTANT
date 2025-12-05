@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import EventCard from './components/Game/EventCard';
 import StartScreen from './components/Game/StartScreen';
 import SmartText from './components/UI/SmartText';
+import { API_URL } from './config'; // <--- 1. IMPORT IMPORTANT
 
 // --- SYNTHETISEUR AUDIO AVANCE ---
 const playSound = (type) => {
@@ -90,7 +91,8 @@ function App() {
     setLastFeedback(null);
     setFloatingEffects([]);
 
-    fetch('http://localhost:8080/api/game/events')
+    // <--- 2. CORRECTION ICI : Utilisation de backticks ` et ${API_URL}
+    fetch(`${API_URL}/api/game/events`)
       .then(res => res.json())
       .then(data => {
         setEvents(data);
@@ -131,7 +133,7 @@ function App() {
 
     setTimeout(() => setFloatingEffects([]), 2000);
 
-    // Préparation Game Over (mais ne déclenche pas tout de suite, attend le clic "Continuer")
+    // Préparation Game Over
     if (newStats.budget <= 0) setFailReason("Faillite ! L'école a été rachetée par Goliath Corp.");
     else if (newStats.satisfaction <= 0) setFailReason("Grève Générale ! Les profs et élèves bloquent le lycée.");
     else setFailReason("");
@@ -152,7 +154,7 @@ function App() {
     if (failReason) {
       setGameStatus('gameover');
       setLastFeedback(null);
-      playSound('gameover'); // <--- SON DE DÉFAITE
+      playSound('gameover'); // SON DE DÉFAITE
       return;
     }
 
@@ -163,7 +165,7 @@ function App() {
       setCurrentIndex(currentIndex + 1);
     } else {
       setGameStatus('finished');
-      playSound('victory'); // <--- SON DE VICTOIRE
+      playSound('victory'); // SON DE VICTOIRE
     }
   };
 
@@ -173,7 +175,8 @@ function App() {
 
     if (user) {
       try {
-        const response = await fetch('http://localhost:8080/api/player/score', {
+        // <--- 3. CORRECTION ICI : Utilisation de backticks ` et ${API_URL}
+        const response = await fetch(`${API_URL}/api/player/score`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username: user.username, score: finalScore })
