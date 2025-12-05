@@ -360,7 +360,7 @@ const styles = {
   },
   endScreen: {
     textAlign: 'center', padding: '40px', background: '#27ae60', color: 'white',
-    borderRadius: '15px', boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
+    borderRadius: '15px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
   },
   restartButton: {
     marginTop: '20px', padding: '15px 30px', fontSize: '1.2rem', cursor: 'pointer',
